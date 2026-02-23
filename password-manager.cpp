@@ -9,3 +9,17 @@ using namespace std;
 #define PASSWORD 27
 #define TABLE 50
 
+// this function is linked-ljist-node
+struct Node{
+char website[WEBSITE];
+char username[USERNAME];
+char password[PASSWORD];
+Node* next; // pointer to new node for this linkedlist
+
+// constructor to initilize object with some default value
+Node(const char* site, const char* user,const char* pass){
+strcpy(website,site);
+strcpy(username,user);
+        strcpy(password,pass);
+next = NULL;
+}};
