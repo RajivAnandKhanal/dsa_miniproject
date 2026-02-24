@@ -1,38 +1,87 @@
-#include<iostream>
-#include <fstream> // this header is to provide classes for file input and output
+#include <iostream>
+#include <fstream>
 #include <cstring>
 #include <cstdlib>
 using namespace std;
 
-#define WEBSITE 100
+#define WEBSITE 50
 #define USERNAME 18
 #define PASSWORD 27
 #define TABLE 100
 
-// this function is linked-ljist-node
-struct Node{
-char website[WEBSITE];
-char username[USERNAME];
-char password[PASSWORD];
-Node* next; // pointer to new node for this linkedlist
-
-// constructor to initilize object with some default value
-Node(const char* site, const char* user,const char* pass){
-strcpy(website,site);
-strcpy(username,user);
-strcpy(password,pass);
-next = NULL;
-}};
-
-// hash functin 
-unsigned int hash(const char* str)
-{
-        unsigned int hash = 0;
-
-        for (int i = 0; str[i] !='\0'; i++)
-        {
-                hash = hash * 31 + str[i];
-        }
-
-        return hash % TABLE;
+// basic hash function
+unsigned int Hash(const char* str) {
+    unsigned int hash = 0;
+    for (int i = 0; str[i] != '\0'; i++) {
+        hash = hash * 31 + str[i];
+    }
+    return hash % TABLE;
 }
+
+// linked list node creation
+struct Node {
+    char website[WEBSITE];
+    char username[USERNAME];
+    char password[PASSWORD];
+    Node* next;
+    
+    Node(const char* site, const char* user, const char* pass) {
+        strcpy(website, site);
+        strcpy(username, user);
+        strcpy(password, pass);
+        next = NULL;
+    }
+};
+
+// STACK 
+struct StackNode {
+    char operation[4];  // "ADD", "DEL", "UPD"
+    char website[WEBSITE];
+    char username[USERNAME];
+    char password[PASSWORD];
+    StackNode* next;
+    
+    StackNode(const char* op, const char* site, const char* user, const char* pass) {
+        strcpy(operation, op);
+        strcpy(website, site);
+        strcpy(username, user);
+        strcpy(password, pass);
+        next = NULL;
+    }
+};
+
+class Stack {
+private:
+    StackNode* top;
+    
+public:
+    Stack() {
+        top = NULL;
+    }
+    
+    void push(const char* op, const char* site, const char* user, const char* pass) {
+        StackNode* newNode = new StackNode(op, site, user, pass);
+        newNode->next = top;
+        top = newNode;
+    }
+    
+    StackNode* pop() {
+        if (isEmpty()) return NULL;
+        StackNode* temp = top;
+        top = top->next;
+        return temp;
+    }
+    
+    bool isEmpty() {
+        return top == NULL;
+    }
+    
+    void clear() {
+        while (!isEmpty()) {
+            StackNode* temp = pop();
+            delete temp;
+        }
+    }
+};
+
+// ==================== HASH MAP FOR FAST LOOKUP ====================
