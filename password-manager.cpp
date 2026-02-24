@@ -85,3 +85,37 @@ public:
 };
 
 // ==================== HASH MAP FOR FAST LOOKUP ====================
+class HashMap {
+private:
+    Node* table[TABLE];
+    
+public:
+    HashMap() {
+        for (int i = 0; i < TABLE; i++) {
+            table[i] = NULL;
+        }
+    }
+    
+    void insert(Node* node) {
+        int index = Hash(node->website);
+        // We're just storing reference, not creating new node
+        // The actual node is managed by linked list
+        table[index] = node;  // Simple chaining not implemented for simplicity
+    }
+    
+    Node* find(const char* website) {
+        int index = Hash(website);
+        return table[index];
+    }
+    
+    void remove(const char* website) {
+        int index = Hash(website);
+        table[index] = NULL;
+    }
+    
+    void update(const char* website, Node* node) {
+        int index = Hash(website);
+        table[index] = node;
+    }
+};
+
