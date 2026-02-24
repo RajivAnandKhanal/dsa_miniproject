@@ -214,9 +214,9 @@ public:
         // Save all credentials
         temp = head;
         while (temp) {
-            file.write(temp->website, MAX_WEBSITE);
-            file.write(temp->username, MAX_USERNAME);
-            file.write(temp->password, MAX_PASSWORD);
+            file.write(temp->website, WEBSITE);
+            file.write(temp->username, USERNAME);
+            file.write(temp->password, PASSWORD);
             temp = temp->next;
         }
         
@@ -248,10 +248,10 @@ public:
         
         // Load all credentials
         for (int i = 0; i < count; i++) {
-            char site[MAX_WEBSITE], user[MAX_USERNAME], pass[MAX_PASSWORD];
-            file.read(site, MAX_WEBSITE);
-            file.read(user, MAX_USERNAME);
-            file.read(pass, MAX_PASSWORD);
+            char site[WEBSITE], user[USERNAME], pass[PASSWORD];
+            file.read(site, WEBSITE);
+            file.read(user, USERNAME);
+            file.read(pass, PASSWORD);
             
             // Add to linked list and hash map
             Node* newNode = new Node(site, user, pass);
@@ -267,11 +267,11 @@ public:
     void addCredential() {
         if (!isAuthenticated) return;
         
-        char site[MAX_WEBSITE], user[MAX_USERNAME], pass[MAX_PASSWORD];
+        char site[WEBSITE], user[USERNAME], pass[PASSWORD];
         
         cout << "\n=== ADD CREDENTIAL ===\n";
         cout << "Website: ";
-        cin.getline(site, MAX_WEBSITE);
+        cin.getline(site, WEBSITE);
         
         // Check if exists
         if (hashMap.find(site) != NULL) {
@@ -280,9 +280,9 @@ public:
         }
         
         cout << "Username: ";
-        cin.getline(user, MAX_USERNAME);
+        cin.getline(user, USERNAME);
         cout << "Password: ";
-        cin.getline(pass, MAX_PASSWORD);
+        cin.getline(pass, PASSWORD);
         
         // Create new node
         Node* newNode = new Node(site, user, pass);
@@ -306,11 +306,11 @@ public:
     void viewCredential() {
         if (!isAuthenticated) return;
         
-        char site[MAX_WEBSITE];
+        char site[WEBSITE];
         
         cout << "\n=== VIEW CREDENTIAL ===\n";
         cout << "Website: ";
-        cin.getline(site, MAX_WEBSITE);
+        cin.getline(site, WEBSITE);
         
         Node* node = hashMap.find(site);
         if (node) {
@@ -325,11 +325,11 @@ public:
     void updateCredential() {
         if (!isAuthenticated) return;
         
-        char site[MAX_WEBSITE];
+        char site[WEBSITE];
         
         cout << "\n=== UPDATE CREDENTIAL ===\n";
         cout << "Website: ";
-        cin.getline(site, MAX_WEBSITE);
+        cin.getline(site, WEBSITE);
         
         Node* node = hashMap.find(site);
         if (!node) {
@@ -338,20 +338,20 @@ public:
         }
         
         // Save old values for undo
-        char oldUser[MAX_USERNAME], oldPass[MAX_PASSWORD];
+        char oldUser[USERNAME], oldPass[PASSWORD];
         strcpy(oldUser, node->username);
         strcpy(oldPass, node->password);
         
-        char newUser[MAX_USERNAME], newPass[MAX_PASSWORD];
+        char newUser[USERNAME], newPass[PASSWORD];
         
         cout << "New Username (Enter to keep '" << node->username << "'): ";
-        cin.getline(newUser, MAX_USERNAME);
+        cin.getline(newUser, USERNAME);
         if (strlen(newUser) > 0) {
             strcpy(node->username, newUser);
         }
         
         cout << "New Password (Enter to keep current): ";
-        cin.getline(newPass, MAX_PASSWORD);
+        cin.getline(newPass, PASSWORD);
         if (strlen(newPass) > 0) {
             strcpy(node->password, newPass);
         }
@@ -371,11 +371,11 @@ public:
     void deleteCredential() {
         if (!isAuthenticated) return;
         
-        char site[MAX_WEBSITE];
+        char site[WEBSITE];
         
         cout << "\n=== DELETE CREDENTIAL ===\n";
         cout << "Website: ";
-        cin.getline(site, MAX_WEBSITE);
+        cin.getline(site, WEBSITE);
         
         Node* node = hashMap.find(site);
         if (!node) {
@@ -481,11 +481,11 @@ public:
     void searchByWebsite() {
         if (!isAuthenticated) return;
         
-        char searchTerm[MAX_WEBSITE];
+        char searchTerm[WEBSITE];
         
         cout << "\n=== SEARCH CREDENTIALS ===\n";
         cout << "Enter website name (or part of it): ";
-        cin.getline(searchTerm, MAX_WEBSITE);
+        cin.getline(searchTerm, WEBSITE);
         
         Node* temp = head;
         bool found = false;
